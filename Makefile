@@ -14,3 +14,6 @@ hello:
 
 i2c:
 	@build/i2c
+
+example:
+	@build/thirdparty/bmp280_example
