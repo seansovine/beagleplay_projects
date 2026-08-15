@@ -14,4 +14,3 @@ hello:
 
 i2c:
 	@build/i2c
-

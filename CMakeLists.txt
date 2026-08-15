@@ -4,6 +4,5 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 project(BeagleI2C LANGUAGES C)
 
-add_executable(hello src/hello.c)
-add_executable(i2c src/hello_i2c.c)
-
+add_subdirectory(thirdparty)
+add_subdirectory(src)
