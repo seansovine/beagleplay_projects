@@ -54,7 +54,8 @@ int handle_failure()
     return EXIT_FAILURE;
 }
 
-int main() {
+int main()
+{
     uint8_t reg_addr;
 
     if(setup_i2c())
@@ -79,15 +80,15 @@ int main() {
         printf("BMP280 detected! Chip ID: 0x%02X (Expected: 0x58)\n", read_buf[0]);
     }
 
-    // TODO: Need to configure sensor and get calibration data.
+    // TODO: Configure sensor for reading and get calibration data.
 
-    // Read raw temp data twice.
+    // Test: Read raw temp data twice to verify.
     if (read_temp_raw() || read_temp_raw())
     {
         return handle_failure();
     }
 
-    // TODO: Need to convert raw data to calibrarted floating point.
+    // TODO: Convert raw data to calibrated floating point.
 
     close(file_desc);
     return EXIT_SUCCESS;
