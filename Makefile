@@ -9,11 +9,8 @@ build:
 clean:
 	rm -rf build/*
 
-hello:
-	@build/hello
-
 i2c:
-	@build/i2c
+	@build/bmp280_i2c_test
 
 example:
 	@build/thirdparty/bmp280_example
