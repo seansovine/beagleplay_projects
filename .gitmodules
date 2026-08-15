@@ -1,3 +1,3 @@
 [submodule "thirdparty/bmp280-driver"]
 	path = thirdparty/bmp280-driver
-	url = https://github.com/ebrezadev/BMP280-Barometric-Pressure-and-Temperature-Sensor-C-Driver.git
+	url = git@github.com:seansovine/bmp280_c_driver_fork.git
