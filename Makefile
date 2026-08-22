@@ -12,5 +12,8 @@ clean:
 i2c:
 	@build/bmp280_i2c_test
 
+run:
+	@build/bmp280_read
+
 example:
 	@build/thirdparty/bmp280_example

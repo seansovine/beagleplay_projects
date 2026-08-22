@@ -1,25 +1,16 @@
 # BeaglePlay projects
 
-This repository contains projects using the BeaglePlay single board Arm Linux computer.
+This contains projects using the BeaglePlay single-board Arm Linux computer.
 
-## Demos
-
-__* `src/demos/hello_i2c.c`__
-
-This is a basic example of connecting to a BMP280 temperature and atmospheric pressure sensor
-that is connected to the I2C bus that's wired to the Grove port, which is `/dev/i2c-1`. It
-simply reads the sensor's device id to confirm the connection. It's a simple program but we can
-expand out from here using the specific APIs of the sensor.
-
-## Workflow
+## Development workflow
 
 We're currently compiling directly on the board, and this will probably work for our applications.
-Though, we've made a start at setting up a nice cross-compilation environment, which would let us use
-more powerful tools than we might want to run on the board, like Clangd.
+We have made a start at setting up a nice cross-compilation environment, which would let us use
+more powerful tools than we might want to run on the board, like Clangd. However, the board does
+support the VS Code remote development server just fine.
 
-To make cross-compilation work we'll need to get or build a cross toolchain with the same glibc
-version as on the board. There seems to be a nice one of those available
-[here](https://github.com/AmanoTeam/obggcc).
+To make cross-compilation work we'll need to get or build a cross toolchain with a glibc version
+compatible with the one in the board's OS. One of those is available [here](https://github.com/AmanoTeam/obggcc).
 
 To build and test on the board you can run:
 
@@ -35,19 +26,26 @@ make i2c
 
 # Run driver library example program.
 make example
+
+# Run the main program.
+make run
 ```
+## Reading sensor data
 
-## Next steps
+The [`bmp280_read`](src/bmp280/bmp280_read.c) program that is currently built is an adaptation of the
+Linux example program from the C library mentioned below. It connects to the sensor over the I2C bus
+that's wired to the board's Grove connector, and reads temperature and barometric pressure readings
+from it once per second.
 
-Next we want to start reading the temperature values from the sensor and make them available
-to other machines on the local Wifi network, maybe using a simple TCP/IP server. We could then
-make various kinds of client programs to query and use data from the server. And, this same basic
-model can be used for other kinds of sensors that we can iterface through the board.
+Eventually, I plan to add a TCP server to this, so that other machines on the local network can connect
+and get readings from the sensor. Though the temperature readings are an interesting test of the home
+HVAC system, this is mainly a test case for using the BeaglePlay and similar single-board computers to
+interface with sensors and other lower-level hardware devices. More interesting projects could later use
+a similar approach for interfacing with cameras, say, or for applications in robotics.
 
-Our initial implementation will use the nice "BMP280 Barometric Pressure and Temperature Sensor C Driver"
-library  available [here](https://github.com/ebrezadev/BMP280-Barometric-Pressure-and-Temperature-Sensor-C-Driver)
-for interfacing with the sensor. This library has been added as a submodule to this repo at
-`thirdparty/bmp280-driver`, and we're building the library and its Linux example program as part
-of the CMake project.
+## Third-party sensor library
 
-You can run the library example from the Makefile, as noted above.
+We're currently using the nice BMP280 C library available
+[here](https://github.com/ebrezadev/BMP280-Barometric-Pressure-and-Temperature-Sensor-C-Driver)
+for interfacing with the sensor. Our CMake project builds this library and also its Linux example
+program.
