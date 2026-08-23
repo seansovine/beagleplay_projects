@@ -2,6 +2,17 @@
 
 This contains projects using the BeaglePlay single-board Arm Linux computer.
 
+## Connecting to the board
+
+I have configured my board to connect to my home WiFi network, and that has reliably just worked
+since I set it up. So my normal way of interacting with the board is now through SSH.
+But for the initial configuration I used the UART serial console and my trusty USB-to-UART bridge
+adapter. Instructions are readily available for which pins on the board to use (and they are
+labelled). The board's UART console is connected to both the kernel's `printk` function and also
+to the login shell input/output. So you can use this to debug boot issues and also to configure
+the system when all other interfaces are down. Instructions for the WiFi configuration are also
+readily available online.
+
 ## Development workflow
 
 We're currently compiling directly on the board, and this will probably work for our applications.
@@ -30,6 +41,7 @@ make example
 # Run the main program.
 make run
 ```
+
 ## Reading sensor data
 
 The [`bmp280_read`](src/bmp280/bmp280_read.c) program that is currently built is an adaptation of the
