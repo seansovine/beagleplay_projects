@@ -13,6 +13,26 @@ to the login shell input/output. So you can use this to debug boot issues and al
 the system when all other interfaces are down. Instructions for the WiFi configuration are also
 readily available online.
 
+## Updating the eMMC OS
+
+The version of Debian (Bullseye) that came loaded into the board flash has just EOLed, so I
+upgraded to the lastest release available [here](https://www.beagleboard.org/distros) from
+BeagleBoard. In the future I'd like to build a custom image using Yocto for the experience,
+but for practical work I'm using the BeaglBoard images, which include kernel, bootloader, and
+device tree configured for the board hardware, along with some useful utilities.
+
+I flashed the image to an SD card using balenaEtcher. For some reason the version I flashed using
+the BeagleBoard Imaging Utility failed to boot. Then I followed the instructions to hold the "usr"
+button on the board while powering it on (I think you can also use the reset button here) to
+boot from the SD card reader. I let this boot once from the SD so that it could apply the presets
+from the `sysconf.txt` file on the boot image. Note that the automatic reboot after the presets were
+applied failed with a "watchdog did not stop" error, but another manual reboot after that succeeded.
+
+Once the boot from SD succeeded and I was able to log in, I then chose the option to copy the image
+from the SD card to the on-board eMMC. After that process completed, I now boot from eMMC and use
+the SD card as external storage. It was surprisingly hard to find specific instructions for these
+steps in one place.
+
 ## Development workflow
 
 We're currently compiling directly on the board, and this will probably work for our applications.
@@ -54,6 +74,13 @@ and get readings from the sensor. Though the temperature readings are an interes
 HVAC system, this is mainly a test case for using the BeaglePlay and similar single-board computers to
 interface with sensors and other lower-level hardware devices. More interesting projects could later use
 a similar approach for interfacing with cameras, say, or for applications in robotics.
+
+## USB camera streaming.
+
+The [linux_camera](https://github.com/seansovine/linux_camera) repo has code to stream frames from a
+USB H264 camera device, convert them to JPEG format, and save them to local storage. It uses the FFmpeg
+libavdevice and libavcodec APIs, and I have been running it on the BeaglePlay board connected to an Arducam
+USB camera. More details are in the project's README file.
 
 ## Third-party sensor library
 
